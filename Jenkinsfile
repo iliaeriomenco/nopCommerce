@@ -1,7 +1,7 @@
 node('docker') {   
     stage 'Checkout'
         checkout scm
-      
+    try {
     stage 'Integration Test'
         //sh 'docker-compose -f docker-compose.integration.yml up'
         sh "ls -la"
@@ -11,7 +11,12 @@ node('docker') {
         //sh "ip=\$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nopcommerce) && curl -v \$ip"
         sh "curl http://127.0.0.1 
         sh "docker-compose -f docker-compose.yml down -v"
-
+    }
+    catch (e) {
+    // If there was an exception thrown, the build failed
+    currentBuild.result = "FAILED"
+        throw e}
+    finally{
     stage 'Slack Notification'
         slackSend channel: 'tt_builds', 
         color: 'good', 
@@ -19,5 +24,6 @@ node('docker') {
         message: """FINISHED: "Job: ${env.JOB_NAME} Build: [${env.BUILD_NUMBER}] Result: ${currentBuild.currentResult}" (<${env.BUILD_URL}|Open>)""",
         teamDomain: 'glossasystems', 
         tokenCredentialId: 'jenkins-slack-integration'
+    }
 
 }
