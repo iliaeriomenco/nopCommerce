@@ -1,6 +1,7 @@
 node('docker') {   
     stage 'Checkout'
         checkout scm
+    
     try {
     stage 'Integration Test'
         //sh 'docker-compose -f docker-compose.integration.yml up'
@@ -12,11 +13,13 @@ node('docker') {
         sh "curl http://127.0.0.1"
         sh "docker-compose -f docker-compose.yml down -v"
     }
+    
     catch (e) {
     // If there was an exception thrown, the build failed
     currentBuild.result = "FAILED"
         throw e}
-    finally{
+    
+    finally {
     stage 'Slack Notification'
         slackSend channel: 'tt_builds', 
         color: 'good', 
@@ -25,5 +28,4 @@ node('docker') {
         teamDomain: 'glossasystems', 
         tokenCredentialId: 'jenkins-slack-integration'
     }
-
 }
