@@ -8,7 +8,8 @@ node('docker') {
         //sh "docker-compose -f docker-compose.yml up --force-recreate --abort-on-container-exit"
         sh "docker-compose -f docker-compose.yml up -d"
         sh "docker-compose ps"
-        sh "ip=\$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nopcommerce) && curl -v \$ip"
+        //sh "ip=\$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nopcommerce) && curl -v \$ip"
+        sh "curl http://127.0.0.1 
         sh "docker-compose -f docker-compose.yml down -v"
 
     stage 'Slack Notification'
