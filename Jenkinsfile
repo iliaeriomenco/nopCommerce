@@ -11,4 +11,11 @@ node('docker') {
         //sh "ip=\$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nopcommerce) && curl -v \$ip"
         sh "docker-compose -f docker-compose.yml down -v"
 
+    stage 'Slack Notification'
+        slackSend channel: 'tt_builds', 
+        color: 'good', 
+        message: 'Test', 
+        teamDomain: 'glossasystems', 
+        tokenCredentialId: 'jenkins-slack-integration'
+
 }
