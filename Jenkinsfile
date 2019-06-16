@@ -14,7 +14,7 @@ node('docker') {
     stage 'Slack Notification'
         slackSend channel: 'tt_builds', 
         color: 'good', 
-        message: 'Test', 
+        message: 'started ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)', 
         teamDomain: 'glossasystems', 
         tokenCredentialId: 'jenkins-slack-integration'
 
