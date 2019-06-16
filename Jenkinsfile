@@ -9,8 +9,7 @@ node('docker') {
         sh "docker-compose -f docker-compose.yml up -d"
         sh "docker-compose ps"
         sh "sleep 10"
-        sh "ip=\$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nopcommerce)"
-        sh "curl -v \$ip"
+        sh "ip=\$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nopcommerce) && curl -v \$ip"
         sh "docker-compose -f docker-compose.yml down -v"
 
 }
