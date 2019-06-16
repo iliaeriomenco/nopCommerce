@@ -8,7 +8,8 @@ node('docker') {
         //sh "docker-compose -f docker-compose.yml up --force-recreate --abort-on-container-exit"
         sh "docker-compose -f docker-compose.yml up -d"
         sh "docker-compose ps"
-        sh "echo "sleep 45 sec" && sleep 45 && curl -I http://127.0.0.1"
+        sh "sleep 45"
+        sh "curl -I http://127.0.0.1"
         sh "docker-compose -f docker-compose.yml down -v"
 
 }
