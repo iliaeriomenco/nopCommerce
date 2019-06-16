@@ -1,4 +1,6 @@
 node('docker') {   
+    stage 'Checkout'
+        checkout scm
       
     stage 'Integration Test'
         //sh 'docker-compose -f docker-compose.integration.yml up'
