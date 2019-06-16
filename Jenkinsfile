@@ -22,7 +22,7 @@ node('docker') {
         slackSend channel: 'tt_builds', 
         color: 'good', 
         //message: 'started ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)', 
-        message: """FINISHED: "Job: ${env.JOB_NAME} Build: [${env.BUILD_NUMBER}] Result: ${currentBuild.currentResult}" (<${env.BUILD_URL}|Open>)""",
+        message: """FINISHED: "Job: ${env.JOB_NAME}, Build: [${env.BUILD_NUMBER}], Result: ${currentBuild.currentResult}" (<${env.BUILD_URL}|Open>)""",
         teamDomain: 'glossasystems', 
         tokenCredentialId: 'jenkins-slack-integration'
     }
